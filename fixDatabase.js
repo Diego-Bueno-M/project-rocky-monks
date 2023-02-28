@@ -1,5 +1,6 @@
 const database1 = require('./database/broken_database_1.json');
 const database2 = require('./database/broken_database_2.json');
+const fs = require("fs");
 
 const fixDatabaseName = (database) => {
   const wrongA = 'æ';
@@ -76,5 +77,15 @@ const fixDataBase = (database) => {
   }
 };
 
-console.log(fixDataBase(database1));
-console.log(fixDataBase(database2));
+const fixedDatabase1 = JSON.stringify(fixDataBase(database1));
+const fixedDatabase2 = JSON.stringify(fixDataBase(database2));
+
+const createJSON = (fileName, data) => {
+  fs.writeFile(fileName, data, err => {
+    if(err) throw err;
+    console.log('Arquivo criado com sucesso!')
+  });
+};
+
+createJSON('fixed_database_1.json', fixedDatabase1);
+createJSON('fixed_database_2.json', fixedDatabase2);
