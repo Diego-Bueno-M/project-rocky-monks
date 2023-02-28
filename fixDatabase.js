@@ -57,10 +57,24 @@ const fixDatabaseBrand = (database) => {
   return database;
 };
 
+const fixDatabaseSells = (database) => {
+  database.forEach((data) => {
+    if(typeof(data.vendas) === 'string') {
+      data.vendas = parseInt(data.vendas);
+    }
+  });
+  return database;
+};
+
 const fixDataBase = (database) => {
   if(!database[0].nome) {
     return fixDatabaseBrand(database);
   } else {
-    return fixDatabaseName(database)
+    const fixedName = fixDatabaseName(database);
+    const fixedDatabase = fixDatabaseSells(fixedName);
+    return fixedDatabase
   }
 };
+
+console.log(fixDataBase(database1));
+console.log(fixDataBase(database2));
